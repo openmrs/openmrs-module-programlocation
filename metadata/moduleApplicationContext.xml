@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!-- Beans to add to the current Application context definition -->
+  
+<beans>
+
+    <bean id="programLocationUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="order"><value>42</value></property>
+        <property name="mappings">
+            <props>
+				<prop key="**/patientPrograms.portlet">patientProgramPortlet</prop>
+				<prop key="**/patientProgram.form">patientProgramFormController</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="patientProgramPortlet" class="@MODULE_PACKAGE@.web.controller.ProgramLocationController">
+		<!--
+			<property name="commandName"><value>model</value></property>
+			<property name="formView"><value>/module/@MODULE_ID@/patientPrograms.portlet</value></property>
+			<property name="successView"><value>patientPrograms.portlet</value></property>
+		-->
+	</bean>	
+
+	<bean id="patientProgramFormController"
+		class="org.springframework.web.servlet.mvc.multiaction.MultiActionController">
+		<property name="methodNameResolver">
+			<ref bean="defaultMethodParamResolver" />
+		</property>
+		<property name="delegate">
+			<bean class="org.openmrs.module.programlocation.web.controller.PatientProgramFormController" />
+		</property>
+	</bean>
+
+	<bean parent="serviceContext">
+		<property name="moduleService">
+			<list>
+				<value>@MODULE_PACKAGE@.ProgramWorkflowService</value> <!-- service interface name -->
+				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+					<property name="transactionManager"><ref bean="transactionManager"/></property>
+					<property name="target">
+						<bean class="@MODULE_PACKAGE@.impl.ProgramWorkflowServiceImpl">
+							<property name="programWorkflowDAO">
+								<bean class="@MODULE_PACKAGE@.db.hibernate.HibernateProgramWorkflowDAO">
+									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
+								</bean>
+							</property>	
+						</bean>
+					</property>
+					<property name="preInterceptors">
+						<list>
+							<ref bean="authorizationInterceptor"/>
+						</list>
+					</property>
+					<property name="transactionAttributeSource">
+						<bean class="org.springframework.transaction.annotation.AnnotationTransactionAttributeSource"/>
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+	
+	
+</beans>
