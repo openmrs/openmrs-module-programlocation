@@ -46,7 +46,6 @@ public class PatientProgramFormController implements Controller {
 	
 	public ModelAndView enroll(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 	                                                                                    IOException {
-		log.fatal("##### USING MY CONTROLLER!");
 		
 		String returnPage = request.getParameter("returnPage");
 		if (returnPage == null) {
@@ -98,8 +97,7 @@ public class PatientProgramFormController implements Controller {
 	
 	public ModelAndView complete(HttpServletRequest request, HttpServletResponse response) throws ServletException,
 	                                                                                      IOException {
-		
-		log.fatal("##### USING MY CONTROLLER!");
+	
 		
 		String returnPage = request.getParameter("returnPage");
 		if (returnPage == null) {
