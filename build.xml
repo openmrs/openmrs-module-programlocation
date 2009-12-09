@@ -3,7 +3,7 @@
 <!-- ** ProgramLocation Module                              ** -->
 <!-- **	                                                    ** -->
 <!-- ** @author pascal                                      ** -->
-<!-- ** @version 1.0                                        ** -->
+<!-- ** @version 0.1                                        ** -->
 <!-- ********************************************************* -->
 <project name="ProgramLocation" default="package-module">
 		
@@ -104,8 +104,8 @@
 	
 	<target name="deploy-web" depends="package-module">
 		<property environment="env"/>
-		<copy todir="${env.CATALINA_HOME}/webapps/openmrs/WEB-INF/view/module/${module.id}">
-			<fileset dir="web/module" includes="**/*" />
+		<copy todir="/var/lib/tomcat5.5/webapps/openmrs/WEB-INF/view/portlets/">
+			<fileset dir="web/module/portlets" includes="**/*" />
 		</copy>
 	</target>
 	

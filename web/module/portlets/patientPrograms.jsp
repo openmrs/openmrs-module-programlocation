@@ -3,6 +3,7 @@
 <openmrs:htmlInclude file="/scripts/calendar/calendar.js" />
 <openmrs:htmlInclude file="/scripts/easyAjax.js" />
 <openmrs:htmlInclude file="/dwr/interface/DWRProgramWorkflowService.js" />
+<openmrs:htmlInclude file="/dwr/interface/DWRProgramLocationService.js" />
 <openmrs:htmlInclude file="/dwr/engine.js" />
 <openmrs:htmlInclude file="/dwr/util.js" />
 
@@ -68,8 +69,9 @@
 		var idToSave = currentProgramBeingEdited;
 		var startDate = parseDate($('enrollmentDateElement').value);
 		var endDate = parseDate($('completionDateElement').value);
+		var locationId = $('locationId').value;
 		currentProgramBeingEdited = null;
-		DWRProgramWorkflowService.updatePatientProgram(idToSave, startDate, endDate, function() {
+		DWRProgramLocationService.updatePatientProgram(idToSave, startDate, endDate, locationId, function() {
 				hideLayer('editPatientProgramPopup');
 				refreshPage();
 			});
@@ -143,14 +145,26 @@
 				dwr.util.addOptions('changeToState', items, 'id', 'name');
 			});
 	}
+
+	function setEditPatientProgramPopupSelectedLocation(location) {
+		locationSelect = document.getElementById("locationId");
+
+		for (i=0;i<=locationSelect.length-1;i++) {
+			if (locationSelect.options[i].text == location) {
+				locationSelect.selectedIndex = i;
+				break;
+			}	
+		}
+	}
 	
-	function showEditPatientProgramPopup(patientProgramId) {
+	function showEditPatientProgramPopup(patientProgramId, location) {
 		hideLayer('editWorkflowPopup');
 		currentProgramBeingEdited = patientProgramId;
 		$('programNameElement').innerHTML = '<spring:message code="general.loading" javaScriptEscape="true"/>';
 		$('enrollmentDateElement').value = '';
 		$('completionDateElement').value = '';
 		showLayer('editPatientProgramPopup');
+		setEditPatientProgramPopupSelectedLocation(location);
 		DWRProgramWorkflowService.getPatientProgram(patientProgramId, function(program) {
 				$('programNameElement').innerHTML = program.name;
 				$('enrollmentDateElement').value = formatDate(program.dateEnrolledAsYmd);
@@ -164,6 +178,19 @@
 		<tr>
 			<td><spring:message code="Program.program"/>:</td>
 			<td><b><span id="programNameElement"></span></b></td>
+		</tr>
+		<tr>
+			<td><spring:message code="programlocation.location"/>:</td>
+			<td>
+				<select name="locationId" id="locationId">
+					<option value=""><spring:message code="programlocation.choose"/></option>
+					<c:forEach var="location" items="${model.locations}">
+						<c:if test="${!location.retired}">						
+							<option value="${location.locationId}">${location.displayString}</option>						
+						</c:if>
+					</c:forEach>
+				</select>
+			</td>
 		</tr>
 		<tr>
 			<td><spring:message code="Program.dateEnrolled"/>:</td>
@@ -231,7 +258,7 @@
 							<c:if test="${program.dateCompleted != null}">
 								<small><i>[<spring:message code="Program.completed"/>]</i></small>
 							</c:if>
-							<a href="javascript:showEditPatientProgramPopup(${program.patientProgramId})">
+							<a href="javascript:showEditPatientProgramPopup(${program.patientProgramId}, '${program.location}')">
 							<openmrs_tag:concept conceptId="${program.program.concept.conceptId}"/>
 							</a>
 						</td>

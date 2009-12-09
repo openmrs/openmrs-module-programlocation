@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
 <!DOCTYPE module PUBLIC "-//OpenMRS//DTD OpenMRS Config 1.0//EN" "http://resources.openmrs.org/doctype/config-1.0.dtd">
+-->
 <module configVersion="1.0">
 	
 	<!-- ProgramLocation Module Properties -->
 	<id>programlocation</id>
 	<name>ProgramLocation Module</name>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
-	<author>Pascal Brandt</author>
+	<author>Jembi Health Systems</author>
 	<description>
 		Functionality to associate locations with patient program enrollments.		
 	</description>
@@ -23,4 +25,20 @@
 		<file>messages.properties</file>
 	</messages>
 	
+    <dwr>
+    	<allow>
+	    	<create creator="new" javascript="DWRProgramLocationService">
+	        	<param name="class" value="@MODULE_PACKAGE@.dwr.DWRProgramLocationService"/>
+ 	            	<include method="updatePatientProgram"/>
+			</create>
+ 	                </allow>
+ 	
+ 	                <signatures>
+ 	                        <![CDATA[
+ 	                        import @MODULE_PACKAGE@.dwr.DWRProgramLocationService;
+ 	                        DWRProgramLocationService.updatePatientProgram(Integer patientProgramId,String enrollmentDateYmd,String completionDateYmd,Integer locationId)
+ 	                        ]]>
+ 	                </signatures>   
+ 	        </dwr>
+		
 </module>
