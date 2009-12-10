@@ -6,11 +6,11 @@
 <beans>
 
     <bean id="programLocationUrlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-        <property name="order"><value>42</value></property>
+        <property name="order"><value>1</value></property>
         <property name="mappings">
             <props>
 				<prop key="**/patientPrograms.portlet">patientProgramPortlet</prop>
-				<prop key="**/patientProgram.form">patientProgramFormController</prop>
+				<prop key="**/patientProgram.form">programLocationPatientProgramFormController</prop>
 			</props>
 		</property>
 	</bean>
@@ -23,7 +23,7 @@
 		-->
 	</bean>	
 
-	<bean id="patientProgramFormController"
+	<bean id="programLocationPatientProgramFormController"
 		class="org.springframework.web.servlet.mvc.multiaction.MultiActionController">
 		<property name="methodNameResolver">
 			<ref bean="defaultMethodParamResolver" />
