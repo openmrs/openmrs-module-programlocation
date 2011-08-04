@@ -7,11 +7,11 @@
 	<!-- ProgramLocation Module Properties -->
 	<id>programlocation</id>
 	<name>ProgramLocation Module</name>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<package>org.openmrs.module.@MODULE_ID@</package>
 	<author>Jembi Health Systems</author>
 	<description>
-		Functionality to associate locations with patient program enrollments.		
+		Associate locations with patient program enrollments, automatically complete programs with terminal states 		
 	</description>
 	<activator>@MODULE_PACKAGE@.ProgramLocationModuleActivator</activator>
 	<!-- /ProgramLocation Module Properties -->
