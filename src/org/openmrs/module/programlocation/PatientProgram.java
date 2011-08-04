@@ -1,9 +1,14 @@
 package org.openmrs.module.programlocation;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 
 import org.openmrs.Location;
 import org.openmrs.PatientState;
+import org.openmrs.ProgramWorkflow;
 import org.openmrs.ProgramWorkflowState;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -64,6 +69,31 @@ public class PatientProgram extends org.openmrs.PatientProgram {
 			// complete patientprogram automatically as it is a terminal state
 			newState.getPatientProgram().setDateCompleted(onDate);
 		}
+	}
+
+	// brute force override to show correct order of states even if 2 states have start date at same day
+	// list of states for patient program in UI and voidLastState only looks into startdate, but doesn't take end date into account
+	public List<PatientState> statesInWorkflow(ProgramWorkflow programWorkflow, boolean includeVoided) {
+		List<PatientState> ret = new ArrayList<PatientState>();
+		for (PatientState st : getStates()) {
+			if (st.getState().getProgramWorkflow().equals(programWorkflow) && (includeVoided || !st.getVoided())) {
+				ret.add(st);
+			}
+		}
+		Collections.sort(ret, new Comparator<PatientState>() {
+			
+			public int compare(PatientState left, PatientState right) {
+				// check if one of the states is active 
+				if (left.getActive()) {
+					return 1;
+				}
+				if (right.getActive()) {
+					return -1;
+				}
+				return OpenmrsUtil.compareWithNullAsEarliest(left.getStartDate(), right.getStartDate());
+			}
+		});
+		return ret;
 	}
 
 }
