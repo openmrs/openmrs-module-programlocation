@@ -31,7 +31,7 @@
 		</filterset>
 		
 		<path id="classpath">
-			<fileset dir="lib">
+			<fileset dir="../openmrs-1.5.x/lib">
 				<include name="**/*.jar"/>
 			</fileset>
 			<fileset dir="lib-common">
@@ -43,25 +43,25 @@
 
 	<target name="clean" description="Delete build and dist directories">
 		<delete dir="dist" />
-		<delete dir="build" />
+		<delete dir="build-ant" />
 	</target>
 
 	<target name="compile-module" depends="init" description="Compiles the module">
-		<mkdir dir="build" />
+		<mkdir dir="build-ant" />
 		
 		<!-- Copy other source data to the build folder -->
-		<copy todir="build">
+		<copy todir="build-ant">
 			<fileset dir="src/" excludes="**/*.java" />
 		</copy>
 		
 		<!--  Compile module java files -->
-		<javac destdir="build" classpathref="classpath" debug="true" debuglevel="lines,source,vars">
+		<javac destdir="build-ant" classpathref="classpath" debug="true" debuglevel="lines,source,vars">
 			<src path="src/" />
 			<include name="**/*.java" />
 		</javac>
 		
 		<!--  Compile module web java files -->
-		<javac destdir="build" classpathref="classpath" debug="true" debuglevel="lines,source,vars">
+		<javac destdir="build-ant" classpathref="classpath" debug="true" debuglevel="lines,source,vars">
 			<compilerarg line="-g" />
 			<src path="web/src/" />
 			<include name="**/*.java" />
@@ -98,7 +98,7 @@
 		
 		<!-- Create distributable jar file -->
 		<jar destfile="dist/${module.id}-${module.version}.omod">
-			<fileset dir="build" includes="**/*" />
+			<fileset dir="build-ant" includes="**/*" />
 		</jar>
 	</target>
 	
@@ -112,7 +112,7 @@
 	<target name="package-jar" depends="package-module" description="Packages class files into jar file to be included in other projects">
 		<!-- Create distributable jar file -->
 		<jar destfile="dist/${module.id}-${module.version}.jar">
-			<fileset dir="build" >
+			<fileset dir="build-ant" >
 				<exclude name="web/**/*" />
 				<exclude name="test/**/*" />
 			</fileset>
