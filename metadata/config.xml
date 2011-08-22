@@ -8,13 +8,12 @@
 	<id>programlocation</id>
 	<name>ProgramLocation Module</name>
 	<version>0.0.3</version>
-	<package>org.openmrs.module.@MODULE_ID@</package>
+	<package>org.openmrs.module.programlocation</package>
 	<author>Jembi Health Systems</author>
 	<description>
 		Associate locations with patient program enrollments, automatically complete programs with terminal states 		
 	</description>
-	<activator>@MODULE_PACKAGE@.ProgramLocationModuleActivator</activator>
-	<!-- /ProgramLocation Module Properties -->
+	<activator>org.openmrs.module.programlocation.ProgramLocationModuleActivator</activator>
 	
 	<mappingFiles>
 		PatientProgram.hbm.xml
@@ -28,14 +27,14 @@
     <dwr>
     	<allow>
 	    	<create creator="new" javascript="DWRProgramLocationService">
-	        	<param name="class" value="@MODULE_PACKAGE@.dwr.DWRProgramLocationService"/>
+	        	<param name="class" value="org.openmrs.module.programlocation.dwr.DWRProgramLocationService"/>
  	            	<include method="updatePatientProgram"/>
 			</create>
  	                </allow>
  	
  	                <signatures>
  	                        <![CDATA[
- 	                        import @MODULE_PACKAGE@.dwr.DWRProgramLocationService;
+ 	                        import org.openmrs.module.programlocation.dwr.DWRProgramLocationService;
  	                        DWRProgramLocationService.updatePatientProgram(Integer patientProgramId,String enrollmentDateYmd,String completionDateYmd,Integer locationId)
  	                        ]]>
  	                </signatures>   

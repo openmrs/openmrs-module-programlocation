@@ -15,10 +15,10 @@
 		</property>
 	</bean>
 
-	<bean id="patientProgramPortlet" class="@MODULE_PACKAGE@.web.controller.ProgramLocationController">
+	<bean id="patientProgramPortlet" class="org.openmrs.module.programlocation.web.controller.ProgramLocationController">
 		<!--
 			<property name="commandName"><value>model</value></property>
-			<property name="formView"><value>/module/@MODULE_ID@/patientPrograms.portlet</value></property>
+			<property name="formView"><value>/module/programlocation/patientPrograms.portlet</value></property>
 			<property name="successView"><value>patientPrograms.portlet</value></property>
 		-->
 	</bean>	
@@ -36,13 +36,13 @@
 	<bean parent="serviceContext">
 		<property name="moduleService">
 			<list>
-				<value>@MODULE_PACKAGE@.ProgramWorkflowService</value> <!-- service interface name -->
+				<value>org.openmrs.module.programlocation.ProgramWorkflowService</value> <!-- service interface name -->
 				<bean class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
 					<property name="transactionManager"><ref bean="transactionManager"/></property>
 					<property name="target">
-						<bean class="@MODULE_PACKAGE@.impl.ProgramWorkflowServiceImpl">
+						<bean class="org.openmrs.module.programlocation.impl.ProgramWorkflowServiceImpl">
 							<property name="programWorkflowDAO">
-								<bean class="@MODULE_PACKAGE@.db.hibernate.HibernateProgramWorkflowDAO">
+								<bean class="org.openmrs.module.programlocation.db.hibernate.HibernateProgramWorkflowDAO">
 									<property name="sessionFactory"><ref bean="sessionFactory"/></property>	
 								</bean>
 							</property>	
