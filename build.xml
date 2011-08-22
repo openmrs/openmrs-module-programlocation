@@ -73,26 +73,26 @@
 		<mkdir dir="dist" />
 		
 		<!-- Copy module metadata -->
-		<copy todir="build/">
+		<copy todir="build-ant/">
 			<fileset dir="metadata/" includes="**/*" />
 			<filterset refid="variables.to.replace" />
 		</copy>
 		
 		<!-- Copy module web data -->
-		<copy todir="build/web/module/">
+		<copy todir="build-ant/web/module/">
 			<fileset dir="web/module/" includes="**/*" excludes="resources/**/*" />
 			<filterset refid="variables.to.replace" />
 		</copy>
 		
 		<!-- Copy the /web/resources folder separately so that image files are not corrupted --> 
-		<copy todir="build/web/module/">
+		<copy todir="build-ant/web/module/">
 			<fileset dir="web/module/" includes="resources/**/*" />
 		</copy>
 		
 		<!-- Copy lib folder -->
 		<!-- (lib should only contain this module's required -->
 		<!-- libraries that OpenMRS doesn't contain already) -->
-		<copy todir="build/lib" failonerror="false">
+		<copy todir="build-ant/lib" failonerror="false">
 			<fileset dir="lib" includes="**/*" />
 		</copy>
 		
