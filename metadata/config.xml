@@ -9,9 +9,9 @@
 	<name>ProgramLocation Module</name>
 	<version>0.0.3</version>
 	<package>org.openmrs.module.programlocation</package>
-	<author>Jembi Health Systems</author>
+	<author>Jembi Health Systems, Partners In Health</author>
 	<description>
-		Associate locations with patient program enrollments, automatically complete programs with terminal states 		
+		Associate locations with patient program enrollments, automatically complete programs with terminal states, fix Exit from Care 		
 	</description>
 	<activator>org.openmrs.module.programlocation.ProgramLocationModuleActivator</activator>
 	
@@ -23,6 +23,11 @@
 		<lang>en</lang>
 		<file>messages.properties</file>
 	</messages>
+	
+    <advice>
+	    <point>org.openmrs.api.ProgramWorkflowService</point>
+	    <class>org.openmrs.module.programlocation.advisor.ProgramWorkflowServiceAroundAdvisor</class>
+    </advice>
 	
     <dwr>
     	<allow>
