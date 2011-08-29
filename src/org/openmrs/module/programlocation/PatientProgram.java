@@ -96,4 +96,14 @@ public class PatientProgram extends org.openmrs.PatientProgram {
 		return ret;
 	}
 
+	// make sure that copy (for merge) also includes enrollment location
+	public org.openmrs.PatientProgram copy() {
+		return copyHelper(new PatientProgram());
+	}
+
+	protected org.openmrs.PatientProgram copyHelper(
+			org.openmrs.PatientProgram target) {
+		((PatientProgram) target).setLocation(getLocation());
+		return super.copyHelper(target);
+	}
 }
