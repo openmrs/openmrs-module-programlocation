@@ -7,7 +7,7 @@
 	<!-- ProgramLocation Module Properties -->
 	<id>programlocation</id>
 	<name>ProgramLocation Module</name>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<package>org.openmrs.module.programlocation</package>
 	<author>Jembi Health Systems, Partners In Health</author>
 	<description>

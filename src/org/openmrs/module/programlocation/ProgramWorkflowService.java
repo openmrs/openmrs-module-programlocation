@@ -1,6 +1,4 @@
 package org.openmrs.module.programlocation;
 
-public interface ProgramWorkflowService extends
-		org.openmrs.api.ProgramWorkflowService {
-	
+public interface ProgramWorkflowService extends org.openmrs.api.ProgramWorkflowService {
 }
